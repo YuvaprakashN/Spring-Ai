@@ -12,8 +12,8 @@ public class ChatController {
 
     private ChatClient chatClient;
 
-    public ChatController(ChatClient.Builder builder){
-        this.chatClient=builder.build();
+    public ChatController(ChatClient chatClient){
+        this.chatClient=chatClient;
     }
 
     @GetMapping("/chat")
@@ -21,6 +21,7 @@ public class ChatController {
 
         return chatClient
                 .prompt()
+                // using system() we overriding System Message
                 .system("""
                                                 You are an internal IT helpdesk assistant. Your role is to assist\s
                                                 employees with IT-related issues such as resetting passwords,\s
