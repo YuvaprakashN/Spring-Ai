@@ -35,4 +35,33 @@ public class StructuredOutPutController {
                 .call().entity(CountryCities.class);
         return ResponseEntity.ok(countryCities);
     }
+
+    @GetMapping("/chat-list")
+    public ResponseEntity<List<String>> chatList(@RequestParam("message") String message) {
+        List<String> countryCities = chatClient
+                .prompt()
+                .user(message)
+                .call().entity(new ListOutputConverter());
+        return ResponseEntity.ok(countryCities);
+    }
+
+    @GetMapping("/chat-map")
+    public ResponseEntity<Map<String,Object>> chatMap(@RequestParam("message") String message) {
+        Map<String, Object> countryCities = chatClient
+                .prompt()
+                .user(message)
+                .call().entity(new MapOutputConverter());
+        return ResponseEntity.ok(countryCities);
+    }
+
+    @GetMapping("/chat-bean-list")
+    public ResponseEntity<List<CountryCities>> chatBeanList(@RequestParam("message") String message) {
+        List<CountryCities> countryCities = chatClient
+                .prompt()
+                .user(message)
+                .call().entity(new ParameterizedTypeReference<List<CountryCities>>() {
+                });
+        return ResponseEntity.ok(countryCities);
+    }
+
 }
