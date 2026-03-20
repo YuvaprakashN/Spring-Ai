@@ -113,7 +113,15 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
+	<!-- Maven Central is included by default in Maven builds.
+         You usually don’t need to configure it explicitly,
+         but it's shown here for clarity. -->
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</repository>
+	</repositories>
 	<build>
 		<plugins>
 			<plugin>
