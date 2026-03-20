@@ -33,3 +33,4 @@ build/
 .vscode/
 /chatMemory/chatmemory.mv.db
 /chatMemory/chatmemory.trace.db
+/chatMemory/chatmemory.lock.db

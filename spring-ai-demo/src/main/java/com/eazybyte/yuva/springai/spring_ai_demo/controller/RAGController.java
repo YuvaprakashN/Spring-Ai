@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
 
-//@RestController
+@RestController
 @RequestMapping("api/rag")
 public class RAGController {
 
@@ -34,6 +34,19 @@ public class RAGController {
     @GetMapping("/random/chat")
     public ResponseEntity<String> randomChat(@RequestHeader("username") String username,
                                              @RequestParam("message") String message) {
+        SearchRequest searchRequest = SearchRequest.builder().query(message).topK(1).similarityThreshold(0.5).build();
+        String similarContext = vectorStore.similaritySearch(searchRequest).stream().map(Document::getText).collect(Collectors.joining(System.lineSeparator()));
 
+        String ans = chatClient.prompt()
+                .system(promptSystemSpec ->
+                        promptSystemSpec.text(promptTepmplate)
+                        .param("documents", similarContext))
+                .advisors(a -> a.param(CONVERSATION_ID, username))
+                .user(message)
+                .call().content();
+        return ResponseEntity.ok(ans);
     }
+
+
+
 }
