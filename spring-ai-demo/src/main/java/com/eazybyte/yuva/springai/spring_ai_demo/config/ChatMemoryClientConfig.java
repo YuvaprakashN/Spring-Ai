@@ -43,7 +43,7 @@ public class ChatMemoryClientConfig {
                 .documentRetriever(VectorStoreDocumentRetriever
                         .builder()
                         .vectorStore(vectorStore)
-                        .topK(2).build())
+                        .topK(3).similarityThreshold(0.5).build())
                 .build();
     }
 }
