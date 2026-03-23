@@ -21,7 +21,7 @@ public class HelpDeskTools {
 
     private final HelpDeskTicketService service;
 
-    @Tool(name = "createTicket", description = "Create the Support Ticket", returnDirect = true)
+    @Tool(name = "createTicket", description = "Create the Support Ticket") //  returnDirect = true aadd this param to return method return statemnt to user instead of LLm response
     String createTicket(@ToolParam(description = "Details to create a Support ticket")
                         TicketRequest ticketRequest, ToolContext toolContext) {
         String username = (String) toolContext.getContext().get("username");
