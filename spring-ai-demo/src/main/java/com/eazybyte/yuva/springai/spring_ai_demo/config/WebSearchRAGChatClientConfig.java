@@ -1,6 +1,7 @@
 package com.eazybyte.yuva.springai.spring_ai_demo.config;
 
 import com.eazybyte.yuva.springai.spring_ai_demo.advisor.TokenUsageAuditAdvisor;
+import com.eazybyte.yuva.springai.spring_ai_demo.rag.PIIMaskingDocumentPostProcessor;
 import com.eazybyte.yuva.springai.spring_ai_demo.rag.WebSearchDocumentRetriever;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
@@ -25,6 +26,7 @@ public class WebSearchRAGChatClientConfig {
         var webSearchRAGAdvisor = RetrievalAugmentationAdvisor.builder()
                 .documentRetriever(WebSearchDocumentRetriever.builder()
                         .restClientBuilder(restClientBuilder).maxResults(5).build())
+                .documentPostProcessors(PIIMaskingDocumentPostProcessor.builder())
                 .build();
         return chatClientBuilder
                 .defaultAdvisors(List.of(loggerAdvisor, memoryAdvisor, tokenUsageAdvisor,
